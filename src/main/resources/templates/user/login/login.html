@@ -9,6 +9,7 @@
             <p>id password</p>
         </div>
         <form th:action="@{/login_proc}" class="form-signin" method="post">
+            <input th:type="hidden" th:value="secret" name="secret_key">
             <div class="form-group">
                 <input type="text" class="form-control" name="username" placeholder="ID" required="required" autofocus="autofocus">
             </div>
