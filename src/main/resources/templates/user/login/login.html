@@ -8,6 +8,11 @@
         <div class="panel">
             <p>id password</p>
         </div>
+
+        <div th:if="${param.error}" class="form-group">
+            <span th:text="${exception}" class="alert alert-danger">Invalid</span>
+        </div>
+
         <form th:action="@{/login_proc}" class="form-signin" method="post">
             <input th:type="hidden" th:value="secret" name="secret_key">
             <div class="form-group">
