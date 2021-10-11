@@ -1,5 +1,7 @@
 package io.security.springsecurity.security.configs;
 
+import io.security.springsecurity.security.common.FormAuthenticationDetailsSource;
+import io.security.springsecurity.security.handler.CustomAccessDeniedHandler;
 import io.security.springsecurity.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -15,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -26,8 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthenticationDetailsSource authenticationDetailsSource;
-
+    private FormAuthenticationDetailsSource authenticationDetailsSource;
 
     @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -61,6 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        CustomAccessDeniedHandler accessDeniedHadnler = new CustomAccessDeniedHandler();
+        accessDeniedHadnler.setErrorPage("/denied");
+        return accessDeniedHadnler;
+    }
+
     //web ignoring
     //정적파일(그림 등등) 보안필터를 거치지않음
     public void configure(WebSecurity web) throws Exception {
@@ -84,7 +93,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler());
     }
-
 }
