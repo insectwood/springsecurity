@@ -26,9 +26,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private FormAuthenticationDetailsSource authenticationDetailsSource;
 
     @Autowired
@@ -40,16 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        //String password = passwordEncoder().encode("1125");
-
-        //권한부여
-//        auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
-//        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER", "USER");
-//        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN", "USER", "MANAGER");
-
-        //auth.userDetailsService(userDetailsService);
-
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -73,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //web ignoring
     //정적파일(그림 등등) 보안필터를 거치지않음
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/error");
     }
 
     @Override
