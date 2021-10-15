@@ -10,4 +10,9 @@ public class MessageController {
     public String login() throws Exception {
         return "user/messages";
     }
+
+    @GetMapping("/api/messages")
+    public String apiMessage() {
+        return "user/messages";
+    }
 }
