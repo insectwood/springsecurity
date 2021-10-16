@@ -1,7 +1,6 @@
 package io.security.springsecurity.security.configs;
 
 import io.security.springsecurity.security.common.FormAuthenticationDetailsSource;
-import io.security.springsecurity.security.filter.AjaxLoginProcessngFilter;
 import io.security.springsecurity.security.handler.CustomAccessDeniedHandler;
 import io.security.springsecurity.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
